@@ -14,11 +14,11 @@ datasource db {
 }
 
 model Product {
-  id     String @id @default(uuid())
-  name   String
-  price  Int
-  amount Int
-  wight  Int
+  id    String @id @default(uuid())
+  name  String
+  price Int
+  stock Int
+  wight Int
 
   // timestamps
   created_at DateTime @default(now())
