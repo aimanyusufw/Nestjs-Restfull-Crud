@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Response } from 'express';
 import { CreateProduct, ProductResponse } from 'src/models/product.model';
@@ -12,6 +12,18 @@ export class ProductController {
   async getAllProduct(): Promise<WebResponse<ProductResponse[]>> {
     // Waiting ther service response
     const result: ProductResponse[] = await this.productService.getAllProduct();
+
+    // return service response
+    return { message: 'Success get all product', data: result };
+  }
+
+  @Get(':id')
+  async getProductById(
+    @Param('id') id: string,
+  ): Promise<WebResponse<ProductResponse>> {
+    // Waiting ther service response
+    const result: ProductResponse =
+      await this.productService.getProductById(id);
 
     // return service response
     return { message: 'Success get all product', data: result };
