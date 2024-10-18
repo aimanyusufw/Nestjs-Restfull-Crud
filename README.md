@@ -22,17 +22,38 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Created with NestJS Framework
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 👋 Hello, my friend! This is my code documentation for learning NestJS.
 
-## Installation
+In this repository, I have created a simple CRUD operation using NestJS. There’s nothing particularly special about this repo, but for me, it may serve as a useful reference for building future applications. I’m sharing this code with friends who are also learning NestJS, and hopefully, we can learn together.
+
+## Table of Contents
+
+1. [Install This Project](#install-project)
+2. [Get All Products](#get-all-products)
+3. [Get Product By Id](#get-product-by-id)
+4. [Create Product](#create-product)
+5. [Update Product](#update-product)
+6. [Delete Product](#delete-product)
+
+---
+
+## Install Project
+
+### Clone the project
+
+```bash
+$ git clone {repository_url}
+```
+
+### Installation
 
 ```bash
 $ yarn install
 ```
 
-## Running the app
+### Running the app
 
 ```bash
 # development
@@ -45,29 +66,219 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-## Test
+## 1. Get All Products
+
+- **Path:** `/api/v1/products`
+- **Method:** `GET`
+- **Description:** Retrieve a list of all products.
+
+### Request:
+
+- **Parameters:** None
+
+### Example:
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+GET /api/v1/products
 ```
 
-## Support
+### Response:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Status:** `200 OK`
+- **Content-Type:** `application/json`
 
-## Stay in touch
+```json
+{
+  "message": "Success get all product",
+  "data": [
+    {
+      "id": "1",
+      "name": "string",
+      "price": 1,
+      "stock": 1,
+      "weight": 1
+    },
+    {
+      "id": "2",
+      "name": "string",
+      "price": 1,
+      "stock": 1,
+      "weight": 1
+    }
+  ]
+}
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 2. Get Product By Id
 
-## License
+- **Path:** `/api/v1/products/{id}`
+- **Method:** `GET`
+- **Description:** Get a product by the ID.
 
-Nest is [MIT licensed](LICENSE).
+### Request:
+
+- **Parameters:**
+
+| Parameter | Type   | Reuired | Desciption        |
+| --------- | ------ | ------- | ----------------- |
+| id        | string | Yes     | Id of the product |
+
+### Example:
+
+```bash
+GET /api/v1/products/2
+```
+
+### Response:
+
+- **Status:** `200 OK`
+- **Content-Type:** `application/json`
+
+```json
+{
+  "message": "Success get product",
+  "data": {
+    "id": "2",
+    "name": "string",
+    "price": 1,
+    "stock": 1,
+    "weight": 1
+  }
+}
+```
+
+## 3. Create Product
+
+- **Path:** `/api/v1/products/create`
+- **Method:** `POST`
+- **Description:** Create a product.
+
+### Request:
+
+- **Parameters:** None
+- **body** :
+
+| Parameter | Type   | Reuired | Desciption            |
+| --------- | ------ | ------- | --------------------- |
+| name      | string | Yes     | Name of the product   |
+| price     | number | Yes     | Price of the product  |
+| stock     | string | Yes     | Stock of the product  |
+| weight    | string | Yes     | Weight of the product |
+
+### Example:
+
+```bash
+POST /api/v1/products
+{
+	"name": "Product 3",
+	"price": 200,
+	"stock" : 1,
+	"weight" : 1
+}
+```
+
+### Response:
+
+- **Status:** `200 OK`
+- **Content-Type:** `application/json`
+
+```json
+{
+  "message": "Success get all product",
+  "data": {
+    "id": "3",
+    "name": 200,
+    "price": 1,
+    "stock": 1,
+    "weight": 1
+  }
+}
+```
+
+## 4. Update Product
+
+- **Path:** `/api/v1/products/{id}/update`
+- **Method:** `PUT`
+- **Description:** Update an existing product.
+
+### Request:
+
+- **Parameters:**
+
+| Parameter | Type   | Reuired | Desciption        |
+| --------- | ------ | ------- | ----------------- |
+| id        | string | Yes     | Id of the product |
+
+- **body** :
+
+| Parameter | Type   | Reuired | Desciption            |
+| --------- | ------ | ------- | --------------------- |
+| name      | string | No      | Name of the product   |
+| price     | number | No      | Price of the product  |
+| stock     | string | No      | Stock of the product  |
+| weight    | string | No      | Weight of the product |
+
+### Example:
+
+```bash
+POST /api/v1/products/4/update
+{
+	"name": "Product 4 Update",
+}
+```
+
+### Response:
+
+- **Status:** `200 OK`
+- **Content-Type:** `application/json`
+
+```json
+{
+  "message": "Success get all product",
+  "data": {
+    "id": "4",
+    "name": "string",
+    "price": 1,
+    "stock": 1,
+    "weight": 1
+  }
+}
+```
+
+## 5. Delete Product
+
+- **Path:** `/api/v1/products/{id}`
+- **Method:** `DELETE`
+- **Description:** Delete product with parameter id.
+
+### Request:
+
+- **Parameters:**
+
+| Parameter | Type   | Reuired | Desciption        |
+| --------- | ------ | ------- | ----------------- |
+| id        | string | Yes     | Id of the product |
+
+### Example:
+
+```bash
+DELETE /api/v1/products/5
+```
+
+### Response:
+
+- **Status:** `200 OK`
+- **Content-Type:** `application/json`
+
+```json
+{
+  "message": "Success delete product",
+  "data": {
+    "id": "5",
+    "name": "string",
+    "price": 1,
+    "stock": 1,
+    "weight": 1
+  }
+}
+```
