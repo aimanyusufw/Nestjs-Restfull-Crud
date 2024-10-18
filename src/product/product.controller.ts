@@ -1,20 +1,28 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Response } from 'express';
-import { ProductResponse } from 'src/models/product.model';
+import { CreateProduct, ProductResponse } from 'src/models/product.model';
+import { WebResponse } from 'src/models/web.model';
 
 @Controller('/product')
 export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Get('')
-  async getAllProduct(@Res() res: Response): Promise<ProductResponse[] | any> {
+  async getAllProduct(): Promise<WebResponse<ProductResponse[]>> {
     // Waiting ther service response
-    const data: ProductResponse[] = await this.productService.getAllProduct();
+    const result: ProductResponse[] = await this.productService.getAllProduct();
 
     // return service response
-    return res
-      .status(200)
-      .json({ messages: 'Get all products successfully', data });
+    return { message: 'Success get all product', data: result };
+  }
+
+  @Post('/create')
+  async createProduct(
+    @Body() request: CreateProduct,
+  ): Promise<WebResponse<ProductResponse>> {
+    const result = await this.productService.createProduct(request);
+
+    return { message: 'Product created', data: result };
   }
 }

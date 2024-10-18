@@ -1,6 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/libs/prisma.service';
-import { ProductResponse } from 'src/models/product.model';
+import { CreateProduct, ProductResponse } from 'src/models/product.model';
 
 @Injectable()
 export class ProductService {
@@ -13,7 +13,7 @@ export class ProductService {
         id: true,
         name: true,
         price: true,
-        wight: true,
+        weight: true,
         stock: true,
         created_at: true,
       },
@@ -25,5 +25,23 @@ export class ProductService {
 
     // Return products data
     return products;
+  }
+
+  async createProduct(data: CreateProduct): Promise<ProductResponse> {
+    // Create the product
+    const product = await this.prisma.product.create({
+      data,
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        weight: true,
+        stock: true,
+        created_at: true,
+      },
+    });
+
+    // retunrn the product
+    return product;
   }
 }
