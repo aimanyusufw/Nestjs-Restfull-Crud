@@ -1,6 +1,10 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/libs/prisma.service';
-import { CreateProduct, ProductResponse } from 'src/models/product.model';
+import {
+  CreateProduct,
+  ProductResponse,
+  UpdateProduct,
+} from 'src/models/product.model';
 
 @Injectable()
 export class ProductService {
@@ -29,17 +33,7 @@ export class ProductService {
 
   async getProductById(id: string): Promise<ProductResponse> {
     // Get product by id data from databse
-    const product: ProductResponse = await this.prisma.product.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        name: true,
-        price: true,
-        weight: true,
-        stock: true,
-        created_at: true,
-      },
-    });
+    const product: ProductResponse = await this.findProduct(id);
 
     // Retun not found if product in not exsits
     if (!product)
@@ -65,5 +59,48 @@ export class ProductService {
 
     // retunrn the product
     return product;
+  }
+
+  async updateProduct(
+    id: string,
+    data: UpdateProduct,
+  ): Promise<ProductResponse> {
+    // Get the product
+    let product = await this.findProduct(id);
+
+    // retunr not found id product is not exits
+    if (!product)
+      throw new HttpException('Products is temporary not found', 404);
+
+    // update product
+    product = await this.prisma.product.update({
+      where: { id },
+      data,
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        weight: true,
+        stock: true,
+        created_at: true,
+      },
+    });
+
+    // return the product
+    return product;
+  }
+
+  async findProduct(id: string) {
+    return await this.prisma.product.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        weight: true,
+        stock: true,
+        created_at: true,
+      },
+    });
   }
 }

@@ -1,7 +1,11 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Res } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Response } from 'express';
-import { CreateProduct, ProductResponse } from 'src/models/product.model';
+import {
+  CreateProduct,
+  ProductResponse,
+  UpdateProduct,
+} from 'src/models/product.model';
 import { WebResponse } from 'src/models/web.model';
 
 @Controller('/product')
@@ -36,5 +40,15 @@ export class ProductController {
     const result = await this.productService.createProduct(request);
 
     return { message: 'Product created', data: result };
+  }
+
+  @Put(':id/update')
+  async updateProduct(
+    @Param('id') id: string,
+    @Body() data: UpdateProduct,
+  ): Promise<WebResponse<ProductResponse>> {
+    const result = await this.productService.updateProduct(id, data);
+
+    return { message: 'Product updated', data: result };
   }
 }
