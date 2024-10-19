@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Res,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Response } from 'express';
 import {
@@ -37,8 +46,10 @@ export class ProductController {
   async createProduct(
     @Body() request: CreateProduct,
   ): Promise<WebResponse<ProductResponse>> {
+    // Waiting ther service response
     const result = await this.productService.createProduct(request);
 
+    // return service response
     return { message: 'Product created', data: result };
   }
 
@@ -47,8 +58,21 @@ export class ProductController {
     @Param('id') id: string,
     @Body() data: UpdateProduct,
   ): Promise<WebResponse<ProductResponse>> {
+    // Waiting ther service response
     const result = await this.productService.updateProduct(id, data);
 
+    // return service response
     return { message: 'Product updated', data: result };
+  }
+
+  @Delete(':id')
+  async deleteProduct(
+    @Param('id') id: string,
+  ): Promise<WebResponse<ProductResponse>> {
+    // Waiting ther service response
+    const result = await this.productService.deleteProduct(id);
+
+    // return service response
+    return { message: 'Product deleted', data: result };
   }
 }

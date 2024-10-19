@@ -68,7 +68,7 @@ export class ProductService {
     // Get the product
     let product = await this.findProduct(id);
 
-    // retunr not found id product is not exits
+    // return not found id product is not exits
     if (!product)
       throw new HttpException('Products is temporary not found', 404);
 
@@ -90,7 +90,23 @@ export class ProductService {
     return product;
   }
 
+  async deleteProduct(id: string): Promise<ProductResponse> {
+    // Get the product
+    let product = await this.findProduct(id);
+
+    // return not found id product is not exits
+    if (!product)
+      throw new HttpException('Products is temporary not found', 404);
+
+    // delete product
+    product = await this.prisma.product.delete({ where: { id: product.id } });
+
+    // return the product
+    return product;
+  }
+
   async findProduct(id: string) {
+    // get the product
     return await this.prisma.product.findUnique({
       where: { id },
       select: {
