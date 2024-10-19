@@ -6,10 +6,8 @@ import {
   Param,
   Post,
   Put,
-  Res,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { Response } from 'express';
 import {
   CreateProduct,
   ProductResponse,
@@ -17,7 +15,7 @@ import {
 } from 'src/models/product.model';
 import { WebResponse } from 'src/models/web.model';
 
-@Controller('/product')
+@Controller('/products')
 export class ProductController {
   constructor(private productService: ProductService) {}
 
